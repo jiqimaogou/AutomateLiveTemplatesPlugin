@@ -1,0 +1,63 @@
+<idea-plugin version="2">
+  <id>edu.jetbrains.plugin.lt</id>
+  <name>Automate Live Templates</name>
+  <version>1.0</version>
+  <vendor email="baidin.d1993@gmail.com" url="https://github.com/baydindima">
+    DmitriyBaidin
+  </vendor>
+
+  <description><![CDATA[
+      Enter short description for your plugin here.<br>
+      <em>most HTML tags may be used</em>
+    ]]></description>
+
+  <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <!--<idea-version since-build="163.12024.16"/>-->
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+
+
+  <depends>org.intellij.scala</depends>
+  <depends>org.jetbrains.kotlin</depends>
+
+  <extensionPoints>
+    <extensionPoint name="fileTypeNodeFilter"
+                    interface="scala.edu.jetbrains.plugin.lt.finder.extensions.FileTypeNodeFilter"/>
+    <extensionPoint name="treeEncodingFormatter"
+                    interface="scala.edu.jetbrains.plugin.lt.finder.postprocessor.TreeEncodingFormatter"/>
+  </extensionPoints>
+
+  <extensions defaultExtensionNs="edu.jetbrains.plugin.lt">
+    <fileTypeNodeFilter
+            implementation="scala.edu.jetbrains.plugin.lt.finder.extensions.JavaFileTypeNodeFilter"/>
+    <fileTypeNodeFilter
+            implementation="scala.edu.jetbrains.plugin.lt.finder.extensions.ScalaFileTypeNodeFilter"/>
+    <fileTypeNodeFilter
+            implementation="scala.edu.jetbrains.plugin.lt.finder.extensions.KotlinFileTypeNodeFilter"/>
+    <treeEncodingFormatter
+            implementation="scala.edu.jetbrains.plugin.lt.finder.postprocessor.JavaTreeEncodingFormatter"/>
+  </extensions>
+
+  <actions>
+    <action id="TemplatesFinder.ID"
+            class="scala.edu.jetbrains.plugin.lt.LiveTemplateFindAction"
+            text="Find Templates"
+            description="Find templates in project">
+      <add-to-group group-id="AnalyzeActions" anchor="last"/>
+      <keyboard-shortcut keymap="$default"
+                         first-keystroke="shift ctrl alt MULTIPLY"/>
+    </action>
+  </actions>
+
+</idea-plugin>
