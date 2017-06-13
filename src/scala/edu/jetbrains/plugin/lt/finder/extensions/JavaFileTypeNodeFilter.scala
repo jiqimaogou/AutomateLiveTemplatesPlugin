@@ -43,7 +43,7 @@ class ScalaFileTypeNodeFilter extends FileTypeNodeFilter {
     case _ => true
   }
 
-  override def fileType: FileType = ScalaFileType.INSTANCE
+  override def fileType: FileType = ScalaFileType.SCALA_FILE_TYPE
 }
 
 class KotlinFileTypeNodeFilter extends FileTypeNodeFilter {
