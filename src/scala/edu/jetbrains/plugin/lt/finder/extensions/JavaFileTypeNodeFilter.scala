@@ -35,7 +35,7 @@ class JavaFileTypeNodeFilter extends FileTypeNodeFilter {
 
 class ScalaFileTypeNodeFilter extends FileTypeNodeFilter {
 
-  import org.jetbrains.plugins.scala.lang.parser.ScalaElementTypes._
+  import org.jetbrains.plugins.scala.lang.parser.ScalaElementType._
 
   override def shouldAnalyze(nodeId: NodeId): Boolean = nodeId match {
     case InnerNodeId(elementType) =>
@@ -43,7 +43,7 @@ class ScalaFileTypeNodeFilter extends FileTypeNodeFilter {
     case _ => true
   }
 
-  override def fileType: FileType = ScalaFileType.SCALA_FILE_TYPE
+  override def fileType: FileType = ScalaFileType.INSTANCE
 }
 
 class KotlinFileTypeNodeFilter extends FileTypeNodeFilter {
