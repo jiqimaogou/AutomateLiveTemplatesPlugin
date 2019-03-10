@@ -50,6 +50,10 @@
             implementation="scala.edu.jetbrains.plugin.lt.finder.postprocessor.JavaTreeEncodingFormatter"/>
   </extensions>
 
+  <extensions defaultExtensionNs="com.intellij">
+    <lang.unwrapDescriptor language="JAVA" implementationClass="scala.edu.jetbrains.plugin.lt.MyJavaUnwrapDescriptor" order="first"/>
+  </extensions>
+
   <actions>
     <action id="TemplatesFinder.ID"
             class="scala.edu.jetbrains.plugin.lt.LiveTemplateFindAction"
