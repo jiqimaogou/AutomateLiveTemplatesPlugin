@@ -4,6 +4,9 @@ import com.intellij.codeInsight.unwrap.JavaMethodParameterUnwrapper;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.util.IncorrectOperationException;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class MyJavaMethodParameterUnwrapper extends JavaMethodParameterUnwrapper {
     @Override
@@ -26,5 +29,10 @@ public class MyJavaMethodParameterUnwrapper extends JavaMethodParameterUnwrapper
             last = last.getPrevSibling();
         }
         context.delete(element);
+    }
+
+    @Override
+    public PsiElement collectAffectedElements(@NotNull PsiElement e, @NotNull List<PsiElement> toExtract) {
+        return e;
     }
 }
