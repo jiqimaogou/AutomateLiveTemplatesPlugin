@@ -65,6 +65,17 @@
       <keyboard-shortcut keymap="$default"
                          first-keystroke="shift ctrl alt MULTIPLY"/>
     </action>
+
+
+    <!-- Tools -->
+    <group id="MyToolsBasicGroup">
+      <action id="MySaveAsTemplate" class="scala.edu.jetbrains.plugin.lt.MySaveAsTemplateAction"/>
+      <action id="MySaveFileAsTemplate" class="scala.edu.jetbrains.plugin.lt.MySaveFileAsTemplateAction"/>
+      <separator/>
+
+      <add-to-group group-id="ToolsMenu" anchor="first"/>
+
+    </group>
   </actions>
 
 </idea-plugin>
