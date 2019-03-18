@@ -20,7 +20,10 @@ import com.intellij.codeInsight.completion.CompletionUtil;
 import com.intellij.codeInsight.completion.OffsetKey;
 import com.intellij.codeInsight.completion.OffsetsInFile;
 import com.intellij.codeInsight.template.TemplateContextType;
-import com.intellij.codeInsight.template.impl.*;
+import com.intellij.codeInsight.template.impl.LiveTemplatesConfigurable;
+import com.intellij.codeInsight.template.impl.TemplateImpl;
+import com.intellij.codeInsight.template.impl.TemplateListPanel;
+import com.intellij.codeInsight.template.impl.TemplateManagerImpl;
 import com.intellij.lang.StdLanguages;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -37,8 +40,13 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
+import com.intellij.psi.presentation.java.ClassPresentationUtil;
 import com.intellij.psi.util.PsiElementFilter;
+import com.intellij.psi.util.PsiFormatUtil;
+import com.intellij.psi.util.PsiFormatUtilBase;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.ArrayUtil;
+import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.ui.update.Activatable;
 import com.intellij.util.ui.update.UiNotifyConnector;
 import org.intellij.plugins.intelliLang.util.PsiUtilEx;
@@ -65,13 +73,31 @@ public class MySaveAsTemplateAction extends AnAction {
         final PsiElement[] psiElements = PsiTreeUtil.collectElements(file, new PsiElementFilter() {
             @Override
             public boolean isAccepted(PsiElement element) {
-                return selection.contains(element.getTextRange()) && element.getReferences().length > 0;
+                return selection.contains(element.getTextRange()) /*&& element.getReferences().length > 0*/;
             }
         });
 
         final Document document = EditorFactory.getInstance().createDocument(editor.getDocument().getText().
                 substring(startOffset, selection.getEndOffset()));
-        TemplateImpl template = new TemplateImpl(TemplateListPanel.ABBREVIATION, TemplateSettings.USER_GROUP_NAME);
+        final String moduleName = project.getName();
+        String key = TemplateListPanel.ABBREVIATION;
+        PsiCall call = ContainerUtil.findInstance(psiElements, PsiCall.class);
+        if (call != null) {
+            PsiMethod method = call.resolveMethod();
+            if (method != null) {
+                final StringBuilder buffer = new StringBuilder(128);
+                final PsiClass containingClass = method.getContainingClass();
+                if (containingClass != null) {
+                    buffer.append(ClassPresentationUtil.getNameForClass(containingClass, false));
+                    buffer.append('.');
+                }
+                final String methodText = PsiFormatUtil.formatMethod(method, PsiSubstitutor.EMPTY, PsiFormatUtilBase.SHOW_NAME | PsiFormatUtilBase.SHOW_PARAMETERS, PsiFormatUtilBase.SHOW_TYPE);
+                buffer.append(methodText);
+
+                key = buffer.toString();
+            }
+        }
+        TemplateImpl template = new TemplateImpl(key, moduleName);
         final boolean isXml = file.getLanguage().is(StdLanguages.XML);
         final int offsetDelta = startOffset;
         WriteCommandAction.writeCommandAction(project).withName((String) null).run(() -> {
@@ -89,16 +115,18 @@ public class MySaveAsTemplateAction extends AnAction {
                         PsiElement target = reference.resolve();
                         if (target instanceof PsiVariable) {
                             PsiVariable variable = (PsiVariable) target;
-                            PsiParameter parameter = PsiUtilEx.getParameterForArgument(element);
-                            if (parameter == null) {
-                                canonicalText = variable.getType().getPresentableText();
-                                String typeText = variable.getType().getCanonicalText();
-                                template.addVariable(canonicalText, "suggestFirstVariableName(\"" + typeText + "\")", "var", true);
-                            } else {
-                                canonicalText = parameter.getName();
-                                template.addVariable(canonicalText, "completeSmart()", "", true);
+                            if (!ArrayUtil.contains(variable, psiElements)) {
+                                PsiParameter parameter = PsiUtilEx.getParameterForArgument(element);
+                                if (parameter == null) {
+                                    canonicalText = variable.getType().getPresentableText();
+                                    String typeText = variable.getType().getCanonicalText();
+                                    template.addVariable(canonicalText, "suggestFirstVariableName(\"" + typeText + "\")", "var", true);
+                                } else {
+                                    canonicalText = parameter.getName();
+                                    template.addVariable(canonicalText, "completeSmart()", "", true);
+                                }
+                                canonicalText = '$' + canonicalText + '$';
                             }
-                            canonicalText = '$' + canonicalText + '$';
                         }
                         // workaround for Java references: canonicalText contains generics, and we need to cut them off because otherwise
                         // they will be duplicated
