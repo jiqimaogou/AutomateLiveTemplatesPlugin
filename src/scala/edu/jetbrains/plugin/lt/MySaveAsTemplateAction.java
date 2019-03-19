@@ -168,7 +168,7 @@ public class MySaveAsTemplateAction extends AnAction {
             }
         });
 
-        String s = document.getText().trim();
+        String s = PyIndentUtil.removeCommonIndent(document.getText(), false).trim();
         template.setString(s);
         template.setToReformat(true);
 
