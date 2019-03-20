@@ -36,7 +36,8 @@ public class MyPsiViewerAction extends DumbAwareAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         Editor editor = isForContext() ? e.getData(CommonDataKeys.EDITOR) : null;
-        new PsiViewerDialog(e.getProject(), editor).show();
+        PsiViewerDialog psiViewerDialog = new PsiViewerDialog(e.getProject(), editor);
+        psiViewerDialog.show();
     }
 
     //@Override
