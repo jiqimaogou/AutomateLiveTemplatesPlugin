@@ -72,6 +72,9 @@
       <action id="MySaveAsTemplate" class="scala.edu.jetbrains.plugin.lt.MySaveAsTemplateAction"/>
       <action id="MySaveFileAsTemplate" class="scala.edu.jetbrains.plugin.lt.MySaveFileAsTemplateAction"/>
       <separator/>
+      <action id="MyPsiViewer" class="scala.edu.jetbrains.plugin.lt.MyPsiViewerAction"/>
+      <action id="MyPsiViewerForContext" class="scala.edu.jetbrains.plugin.lt.MyPsiViewerAction$ForContext"/>
+      <separator/>
 
       <add-to-group group-id="ToolsMenu" anchor="first"/>
 
