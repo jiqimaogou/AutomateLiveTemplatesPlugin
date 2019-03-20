@@ -39,14 +39,14 @@ public class MyPsiViewerAction extends DumbAwareAction {
         new PsiViewerDialog(e.getProject(), editor).show();
     }
 
-    @Override
-    public void update(@NotNull AnActionEvent e) {
-        boolean enabled = isEnabled(e.getProject());
-        e.getPresentation().setEnabledAndVisible(enabled);
-        if (enabled && isForContext() && e.getData(CommonDataKeys.EDITOR) == null) {
-            e.getPresentation().setEnabled(false);
-        }
-    }
+    //@Override
+    //public void update(@NotNull AnActionEvent e) {
+    //    boolean enabled = isEnabled(e.getProject());
+    //    e.getPresentation().setEnabledAndVisible(enabled);
+    //    if (enabled && isForContext() && e.getData(CommonDataKeys.EDITOR) == null) {
+    //        e.getPresentation().setEnabled(false);
+    //    }
+    //}
 
     protected boolean isForContext() {
         return false;
