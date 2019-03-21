@@ -108,7 +108,7 @@ public class MyPsiViewerAction extends DumbAwareAction {
                 return;
             }
             for (TreePath path : selectionPaths) {
-                if (path.getPath().length <= 2) {
+                if (path.getPath().length <= 0) {
                     e.getPresentation().setEnabled(false);
                     return;
                 }
