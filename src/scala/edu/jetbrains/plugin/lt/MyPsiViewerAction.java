@@ -62,6 +62,7 @@ import javax.swing.tree.TreePath;
 public class MyPsiViewerAction extends DumbAwareAction {
 
     Tree myPsiTreeValue;
+    ViewerTreeBuilder myPsiTreeBuilderValue;
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
@@ -74,7 +75,7 @@ public class MyPsiViewerAction extends DumbAwareAction {
             Field myPsiTreeBuilderField = PsiViewerDialog.class.getDeclaredField(
                     "myPsiTreeBuilder");
             myPsiTreeBuilderField.setAccessible(true);
-            ViewerTreeBuilder myPsiTreeBuilderValue = (ViewerTreeBuilder) myPsiTreeBuilderField.get(
+            myPsiTreeBuilderValue = (ViewerTreeBuilder) myPsiTreeBuilderField.get(
                     psiViewerDialog);
 
             myPsiTreeValue.addMouseListener(new PopupHandler() {
