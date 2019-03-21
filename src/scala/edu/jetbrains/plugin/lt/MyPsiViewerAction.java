@@ -54,7 +54,7 @@ public class MyPsiViewerAction extends DumbAwareAction {
             myPsiTreeField.setAccessible(true);
             myPsiTreeValue = (Tree) myPsiTreeField.get(psiViewerDialog);
 
-            myTree.addMouseListener(new PopupHandler() {
+            myPsiTreeValue.addMouseListener(new PopupHandler() {
                 @Override
                 public void invokePopup(Component comp, int x, int y) {
                     popupInvoked(comp, x, y);
