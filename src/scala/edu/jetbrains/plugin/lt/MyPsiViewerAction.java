@@ -80,7 +80,7 @@ public class MyPsiViewerAction extends DumbAwareAction {
                     psiViewerDialog);
             Field myEditorField = PsiViewerDialog.class.getDeclaredField("myEditor");
             myEditorField.setAccessible(true);
-            EditorEx myEditorValue = (EditorEx) myEditorField.get(ui);
+            EditorEx myEditorValue = (EditorEx) myEditorField.get(psiViewerDialog);
 
             myPsiTreeValue.addMouseListener(new PopupHandler() {
                 @Override
