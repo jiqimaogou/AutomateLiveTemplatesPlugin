@@ -31,6 +31,7 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.actionSystem.ShortcutSet;
 import com.intellij.openapi.application.ex.ApplicationManagerEx;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.keymap.KeymapUtil;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
@@ -77,6 +78,9 @@ public class MyPsiViewerAction extends DumbAwareAction {
             myPsiTreeBuilderField.setAccessible(true);
             myPsiTreeBuilderValue = (ViewerTreeBuilder) myPsiTreeBuilderField.get(
                     psiViewerDialog);
+            Field myEditorField = PsiViewerDialog.class.getDeclaredField("myEditor");
+            myEditorField.setAccessible(true);
+            EditorEx myEditorValue = (EditorEx) myEditorField.get(ui);
 
             myPsiTreeValue.addMouseListener(new PopupHandler() {
                 @Override
