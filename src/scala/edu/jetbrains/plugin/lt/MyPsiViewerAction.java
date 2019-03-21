@@ -19,6 +19,7 @@ import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeBundle;
 import com.intellij.internal.psiView.PsiViewerDialog;
 import com.intellij.internal.psiView.ViewerNodeDescriptor;
+import com.intellij.internal.psiView.ViewerTreeBuilder;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionPlaces;
@@ -70,6 +71,11 @@ public class MyPsiViewerAction extends DumbAwareAction {
             Field myPsiTreeField = PsiViewerDialog.class.getDeclaredField("myPsiTree");
             myPsiTreeField.setAccessible(true);
             myPsiTreeValue = (Tree) myPsiTreeField.get(psiViewerDialog);
+            Field myPsiTreeBuilderField = PsiViewerDialog.class.getDeclaredField(
+                    "myPsiTreeBuilder");
+            myPsiTreeBuilderField.setAccessible(true);
+            ViewerTreeBuilder myPsiTreeBuilderValue = (ViewerTreeBuilder) myPsiTreeBuilderField.get(
+                    psiViewerDialog);
 
             myPsiTreeValue.addMouseListener(new PopupHandler() {
                 @Override
