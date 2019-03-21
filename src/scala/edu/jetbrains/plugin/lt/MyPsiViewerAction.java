@@ -143,9 +143,9 @@ public class MyPsiViewerAction extends DumbAwareAction {
             final TreePath[] selectionPath = myPsiTreeValue.getSelectionPaths();
             if (selectionPath != null) {
                 for (TreePath treePath : selectionPath) {
-                    if (path != null) {
+                    if (treePath != null) {
                         DefaultMutableTreeNode node =
-                                (DefaultMutableTreeNode) path.getLastPathComponent();
+                                (DefaultMutableTreeNode) treePath.getLastPathComponent();
                         if (!(node.getUserObject() instanceof ViewerNodeDescriptor)) return;
                         ViewerNodeDescriptor descriptor =
                                 (ViewerNodeDescriptor) node.getUserObject();
