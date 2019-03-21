@@ -44,6 +44,7 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.KeyStroke;
@@ -128,20 +129,20 @@ public class MyPsiViewerAction extends DumbAwareAction {
                     KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0),
                     KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0));
             if (shortcutSet != null) {
-                registerCustomShortcutSet(shortcutSet, myPanel);
+                registerCustomShortcutSet(shortcutSet, myPsiTreeValue);
             }
         }
 
         @Override
         public void actionPerformed(@NotNull AnActionEvent e) {
-            final List<TreePath> expandedPaths = TreeUtil.collectExpandedPaths(myActionsTree);
-            final TreePath[] selectionPath = myActionsTree.getSelectionPaths();
+            final List<TreePath> expandedPaths = TreeUtil.collectExpandedPaths(myPsiTreeValue);
+            final TreePath[] selectionPath = myPsiTreeValue.getSelectionPaths();
             if (selectionPath != null) {
                 for (TreePath treePath : selectionPath) {
                 }
-                ((DefaultTreeModel)myActionsTree.getModel()).reload();
+                ((DefaultTreeModel) myPsiTreeValue.getModel()).reload();
             }
-            TreeUtil.restoreExpandedPaths(myActionsTree, expandedPaths);
+            TreeUtil.restoreExpandedPaths(myPsiTreeValue, expandedPaths);
         }
     }
 
