@@ -38,6 +38,9 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.Component;
 import java.lang.reflect.Field;
 
+import javax.swing.Icon;
+import javax.swing.tree.TreePath;
+
 /**
  * @author Konstantin Bulenkov
  */
@@ -73,6 +76,39 @@ public class MyPsiViewerAction extends DumbAwareAction {
         ActionPopupMenu menu = ActionManager.getInstance().createActionPopupMenu(
                 ActionPlaces.UNKNOWN, group);
         menu.getComponent().show(component, x, y);
+    }
+
+
+    private abstract class TreeSelectionAction extends DumbAwareAction {
+        private TreeSelectionAction(@Nullable String text) {
+            super(text);
+        }
+
+        private TreeSelectionAction(@Nullable String text, @Nullable String description,
+                @Nullable Icon icon) {
+            super(text, description, icon);
+        }
+
+        @Override
+        public void update(@NotNull AnActionEvent e) {
+            e.getPresentation().setEnabled(true);
+            TreePath[] selectionPaths = myPsiTreeValue.getSelectionPaths();
+            if (selectionPaths == null) {
+                e.getPresentation().setEnabled(false);
+                return;
+            }
+            for (TreePath path : selectionPaths) {
+                if (path.getPath().length <= 2) {
+                    e.getPresentation().setEnabled(false);
+                    return;
+                }
+            }
+        }
+
+        protected final boolean isSingleSelection() {
+            final TreePath[] selectionPaths = myPsiTreeValue.getSelectionPaths();
+            return selectionPaths != null && selectionPaths.length == 1;
+        }
     }
 
 
