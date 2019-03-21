@@ -18,6 +18,8 @@ package scala.edu.jetbrains.plugin.lt;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeBundle;
 import com.intellij.internal.psiView.PsiViewerDialog;
+import com.intellij.internal.psiView.ViewerNodeDescriptor;
+import com.intellij.lang.ASTNode;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.ActionPopupMenu;
@@ -34,6 +36,7 @@ import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiElement;
 import com.intellij.ui.PopupHandler;
 import com.intellij.ui.treeStructure.Tree;
 import com.intellij.util.ui.tree.TreeUtil;
@@ -48,6 +51,7 @@ import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.KeyStroke;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
@@ -139,6 +143,20 @@ public class MyPsiViewerAction extends DumbAwareAction {
             final TreePath[] selectionPath = myPsiTreeValue.getSelectionPaths();
             if (selectionPath != null) {
                 for (TreePath treePath : selectionPath) {
+                    if (path != null) {
+                        DefaultMutableTreeNode node =
+                                (DefaultMutableTreeNode) path.getLastPathComponent();
+                        if (!(node.getUserObject() instanceof ViewerNodeDescriptor)) return;
+                        ViewerNodeDescriptor descriptor =
+                                (ViewerNodeDescriptor) node.getUserObject();
+                        Object elementObject = descriptor.getElement();
+                        final PsiElement element = elementObject instanceof PsiElement
+                                ? (PsiElement) elementObject
+                                : elementObject instanceof ASTNode
+                                        ? ((ASTNode) elementObject).getPsi() : null;
+                        if (element != null) {
+                        }
+                    }
                 }
                 ((DefaultTreeModel) myPsiTreeValue.getModel()).reload();
             }
