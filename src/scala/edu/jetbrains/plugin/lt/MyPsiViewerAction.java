@@ -25,11 +25,11 @@ import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.openapi.project.Project;
+import com.intellij.ui.treeStructure.Tree;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.lang.reflect.Field;
 
 /**
@@ -42,11 +42,10 @@ public class MyPsiViewerAction extends DumbAwareAction {
         Editor editor = isForContext() ? e.getData(CommonDataKeys.EDITOR) : null;
         PsiViewerDialog psiViewerDialog = new PsiViewerDialog(e.getProject(), editor);
         try {
-            Field decrButtonField = BasicScrollBarUI.class.getDeclaredField("decrButton");
-            decrButtonField.setAccessible(true);
-            JButton decrButtonValue = (JButton)decrButtonField.get(ui);
-        }
-        catch (Exception exc) {
+            Field myPsiTreeField = PsiViewerDialog.class.getDeclaredField("myPsiTree");
+            myPsiTreeField.setAccessible(true);
+            Tree myPsiTreeValue = (Tree) myPsiTreeField.get(psiViewerDialog);
+        } catch (Exception exc) {
             exc.printStackTrace();
             throw new IllegalStateException(exc.getMessage());
         }
