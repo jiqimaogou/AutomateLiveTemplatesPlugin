@@ -29,7 +29,9 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.CommonShortcuts;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.actionSystem.ShortcutSet;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ex.ApplicationManagerEx;
+import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.keymap.KeymapUtil;
@@ -167,6 +169,9 @@ public class MyPsiViewerAction extends DumbAwareAction {
                                 : elementObject instanceof ASTNode
                                         ? ((ASTNode) elementObject).getPsi() : null;
                         if (element != null) {
+                            CommandProcessor.getInstance().executeCommand(myProject,
+                                    () -> ApplicationManager.getApplication().runWriteAction(() -> {
+                                    }), null, myEditor.getDocument());
                         }
                     }
                 }
