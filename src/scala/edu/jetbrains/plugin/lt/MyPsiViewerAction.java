@@ -28,6 +28,10 @@ import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import java.lang.reflect.Field;
+
 /**
  * @author Konstantin Bulenkov
  */
@@ -37,6 +41,15 @@ public class MyPsiViewerAction extends DumbAwareAction {
     public void actionPerformed(@NotNull AnActionEvent e) {
         Editor editor = isForContext() ? e.getData(CommonDataKeys.EDITOR) : null;
         PsiViewerDialog psiViewerDialog = new PsiViewerDialog(e.getProject(), editor);
+        try {
+            Field decrButtonField = BasicScrollBarUI.class.getDeclaredField("decrButton");
+            decrButtonField.setAccessible(true);
+            JButton decrButtonValue = (JButton)decrButtonField.get(ui);
+        }
+        catch (Exception exc) {
+            exc.printStackTrace();
+            throw new IllegalStateException(exc.getMessage());
+        }
         psiViewerDialog.show();
     }
 
