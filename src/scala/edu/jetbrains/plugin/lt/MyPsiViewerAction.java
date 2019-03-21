@@ -15,15 +15,20 @@
  */
 package scala.edu.jetbrains.plugin.lt;
 
+import com.intellij.icons.AllIcons;
+import com.intellij.ide.IdeBundle;
 import com.intellij.internal.psiView.PsiViewerDialog;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.ActionPopupMenu;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.CommonShortcuts;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.actionSystem.ShortcutSet;
 import com.intellij.openapi.application.ex.ApplicationManagerEx;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.keymap.KeymapUtil;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleType;
@@ -31,14 +36,18 @@ import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.PopupHandler;
 import com.intellij.ui.treeStructure.Tree;
+import com.intellij.util.ui.tree.TreeUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
 
 import javax.swing.Icon;
+import javax.swing.KeyStroke;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 /**
@@ -108,6 +117,31 @@ public class MyPsiViewerAction extends DumbAwareAction {
         protected final boolean isSingleSelection() {
             final TreePath[] selectionPaths = myPsiTreeValue.getSelectionPaths();
             return selectionPaths != null && selectionPaths.length == 1;
+        }
+    }
+
+
+    private class RemoveAction extends TreeSelectionAction {
+        private RemoveAction() {
+            super(IdeBundle.message("button.remove"), null, AllIcons.General.Remove);
+            ShortcutSet shortcutSet = KeymapUtil.filterKeyStrokes(CommonShortcuts.getDelete(),
+                    KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0),
+                    KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0));
+            if (shortcutSet != null) {
+                registerCustomShortcutSet(shortcutSet, myPanel);
+            }
+        }
+
+        @Override
+        public void actionPerformed(@NotNull AnActionEvent e) {
+            final List<TreePath> expandedPaths = TreeUtil.collectExpandedPaths(myActionsTree);
+            final TreePath[] selectionPath = myActionsTree.getSelectionPaths();
+            if (selectionPath != null) {
+                for (TreePath treePath : selectionPath) {
+                }
+                ((DefaultTreeModel)myActionsTree.getModel()).reload();
+            }
+            TreeUtil.restoreExpandedPaths(myActionsTree, expandedPaths);
         }
     }
 
