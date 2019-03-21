@@ -169,9 +169,9 @@ public class MyPsiViewerAction extends DumbAwareAction {
                                 : elementObject instanceof ASTNode
                                         ? ((ASTNode) elementObject).getPsi() : null;
                         if (element != null) {
-                            CommandProcessor.getInstance().executeCommand(myProject,
+                            CommandProcessor.getInstance().executeCommand(element.getProject(),
                                     () -> ApplicationManager.getApplication().runWriteAction(() -> {
-                                    }), null, myEditor.getDocument());
+                                    }), null, myEditorValue.getDocument());
                         }
                     }
                 }
