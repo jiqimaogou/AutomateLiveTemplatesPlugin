@@ -16,8 +16,12 @@
 package scala.edu.jetbrains.plugin.lt;
 
 import com.intellij.internal.psiView.PsiViewerDialog;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.ActionPlaces;
+import com.intellij.openapi.actionSystem.ActionPopupMenu;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.application.ex.ApplicationManagerEx;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
@@ -25,11 +29,13 @@ import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.openapi.project.Project;
+import com.intellij.ui.PopupHandler;
 import com.intellij.ui.treeStructure.Tree;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
+import java.awt.Component;
 import java.lang.reflect.Field;
 
 /**
@@ -47,12 +53,28 @@ public class MyPsiViewerAction extends DumbAwareAction {
             Field myPsiTreeField = PsiViewerDialog.class.getDeclaredField("myPsiTree");
             myPsiTreeField.setAccessible(true);
             myPsiTreeValue = (Tree) myPsiTreeField.get(psiViewerDialog);
+
+            myTree.addMouseListener(new PopupHandler() {
+                @Override
+                public void invokePopup(Component comp, int x, int y) {
+                    popupInvoked(comp, x, y);
+                }
+            });
+
         } catch (Exception exc) {
             exc.printStackTrace();
             throw new IllegalStateException(exc.getMessage());
         }
         psiViewerDialog.show();
     }
+
+    private void popupInvoked(Component component, int x, int y) {
+        DefaultActionGroup group = new DefaultActionGroup();
+        ActionPopupMenu menu = ActionManager.getInstance().createActionPopupMenu(
+                ActionPlaces.ANT_MESSAGES_POPUP, group);
+        menu.getComponent().show(component, x, y);
+    }
+
 
     //@Override
     //public void update(@NotNull AnActionEvent e) {
