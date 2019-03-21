@@ -37,6 +37,8 @@ import java.lang.reflect.Field;
  */
 public class MyPsiViewerAction extends DumbAwareAction {
 
+    Tree myPsiTreeValue;
+
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         Editor editor = isForContext() ? e.getData(CommonDataKeys.EDITOR) : null;
@@ -44,7 +46,7 @@ public class MyPsiViewerAction extends DumbAwareAction {
         try {
             Field myPsiTreeField = PsiViewerDialog.class.getDeclaredField("myPsiTree");
             myPsiTreeField.setAccessible(true);
-            Tree myPsiTreeValue = (Tree) myPsiTreeField.get(psiViewerDialog);
+            myPsiTreeValue = (Tree) myPsiTreeField.get(psiViewerDialog);
         } catch (Exception exc) {
             exc.printStackTrace();
             throw new IllegalStateException(exc.getMessage());
