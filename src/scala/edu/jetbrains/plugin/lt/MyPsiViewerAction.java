@@ -71,7 +71,7 @@ public class MyPsiViewerAction extends DumbAwareAction {
     private void popupInvoked(Component component, int x, int y) {
         DefaultActionGroup group = new DefaultActionGroup();
         ActionPopupMenu menu = ActionManager.getInstance().createActionPopupMenu(
-                ActionPlaces.ANT_MESSAGES_POPUP, group);
+                ActionPlaces.UNKNOWN, group);
         menu.getComponent().show(component, x, y);
     }
 
