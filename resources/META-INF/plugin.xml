@@ -1,84 +1,95 @@
 <idea-plugin>
-  <id>edu.jetbrains.plugin.lt</id>
-  <name>Automate Live Templates</name>
-  <version>1.01</version>
-  <vendor email="baidin.d1993@gmail.com" url="https://github.com/baydindima">
-    DmitriyBaidin
-  </vendor>
+    <id>edu.jetbrains.plugin.lt</id>
+    <name>Automate Live Templates</name>
+    <version>1.01</version>
+    <vendor email="baidin.d1993@gmail.com" url="https://github.com/baydindima">
+        DmitriyBaidin
+    </vendor>
 
-  <description><![CDATA[
+    <description><![CDATA[
       Plugin for searching frequent structures in code<br>
       For usage: Analyze -> Find templates in project -> Manually -> Add template -> Check in Live Templates -> Use
     ]]></description>
 
-  <change-notes><![CDATA[
+    <change-notes><![CDATA[
       Add change notes here.<br>
       <em>most HTML tags may be used</em>
     ]]>
-  </change-notes>
+    </change-notes>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <!--<idea-version since-build="163.12024.16"/>-->
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <!--<idea-version since-build="163.12024.16"/>-->
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
 
-  <idea-version since-build="171.4694.23"/>
+    <idea-version since-build="171.4694.23"/>
 
 
-  <depends>org.intellij.scala</depends>
-  <depends>org.jetbrains.kotlin</depends>
+    <depends>org.intellij.scala</depends>
+    <depends>org.jetbrains.kotlin</depends>
 
-  <extensionPoints>
-    <extensionPoint name="fileTypeNodeFilter"
-                    interface="scala.edu.jetbrains.plugin.lt.finder.extensions.FileTypeNodeFilter"/>
-    <extensionPoint name="treeEncodingFormatter"
-                    interface="scala.edu.jetbrains.plugin.lt.finder.postprocessor.TreeEncodingFormatter"/>
-  </extensionPoints>
+    <extensionPoints>
+        <extensionPoint name="fileTypeNodeFilter"
+                        interface="scala.edu.jetbrains.plugin.lt.finder.extensions.FileTypeNodeFilter"/>
+        <extensionPoint name="treeEncodingFormatter"
+                        interface="scala.edu.jetbrains.plugin.lt.finder.postprocessor.TreeEncodingFormatter"/>
+    </extensionPoints>
 
-  <extensions defaultExtensionNs="edu.jetbrains.plugin.lt">
-    <fileTypeNodeFilter
+    <extensions defaultExtensionNs="edu.jetbrains.plugin.lt">
+        <fileTypeNodeFilter
             implementation="scala.edu.jetbrains.plugin.lt.finder.extensions.JavaFileTypeNodeFilter"/>
-    <fileTypeNodeFilter
+        <fileTypeNodeFilter
             implementation="scala.edu.jetbrains.plugin.lt.finder.extensions.ScalaFileTypeNodeFilter"/>
-    <fileTypeNodeFilter
+        <fileTypeNodeFilter
             implementation="scala.edu.jetbrains.plugin.lt.finder.extensions.KotlinFileTypeNodeFilter"/>
-    <treeEncodingFormatter
+        <treeEncodingFormatter
             implementation="scala.edu.jetbrains.plugin.lt.finder.postprocessor.JavaTreeEncodingFormatter"/>
-  </extensions>
+    </extensions>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <moveLeftRightHandler language="JAVA"
-                          implementationClass="scala.edu.jetbrains.plugin.lt.MyJavaMoveLeftRightHandler" order="first"/>
-    <lang.unwrapDescriptor language="JAVA" implementationClass="scala.edu.jetbrains.plugin.lt.MyJavaUnwrapDescriptor" order="first"/>
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <moveLeftRightHandler language="JAVA"
+                              implementationClass="scala.edu.jetbrains.plugin.lt.MyJavaMoveLeftRightHandler"
+                              order="first"/>
+        <lang.unwrapDescriptor language="JAVA"
+                               implementationClass="scala.edu.jetbrains.plugin.lt.MyJavaUnwrapDescriptor"
+                               order="first"/>
+        <applicationConfigurable groupId="editor" groupWeight="130"
+                                 instance="com.intellij.codeInsight.template.impl.MyLiveTemplatesConfigurable"
+                                 id="editing.templates"
+                                 key="templates.settings.page.title"
+                                 bundle="messages.CodeInsightBundle"/>
+    </extensions>
 
-  <actions>
-    <action id="TemplatesFinder.ID"
-            class="scala.edu.jetbrains.plugin.lt.LiveTemplateFindAction"
-            text="Find Templates"
-            description="Find templates in project">
-      <add-to-group group-id="AnalyzeActions" anchor="last"/>
-      <keyboard-shortcut keymap="$default"
-                         first-keystroke="shift ctrl alt MULTIPLY"/>
-    </action>
+    <actions>
+        <action id="TemplatesFinder.ID"
+                class="scala.edu.jetbrains.plugin.lt.LiveTemplateFindAction"
+                text="Find Templates"
+                description="Find templates in project">
+            <add-to-group group-id="AnalyzeActions" anchor="last"/>
+            <keyboard-shortcut keymap="$default"
+                               first-keystroke="shift ctrl alt MULTIPLY"/>
+        </action>
 
 
-    <!-- Tools -->
-    <group id="MyToolsBasicGroup">
-      <action id="MySaveAsTemplate" class="scala.edu.jetbrains.plugin.lt.MySaveAsTemplateAction"/>
-      <action id="MySaveFileAsTemplate" class="scala.edu.jetbrains.plugin.lt.MySaveFileAsTemplateAction"/>
-      <separator/>
-      <action id="MyPsiViewer" class="scala.edu.jetbrains.plugin.lt.MyPsiViewerAction"/>
-      <action id="MyPsiViewerForContext" class="scala.edu.jetbrains.plugin.lt.MyPsiViewerAction$ForContext"/>
-      <separator/>
+        <!-- Tools -->
+        <group id="MyToolsBasicGroup">
+            <action id="MySaveAsTemplate"
+                    class="scala.edu.jetbrains.plugin.lt.MySaveAsTemplateAction"/>
+            <action id="MySaveFileAsTemplate"
+                    class="scala.edu.jetbrains.plugin.lt.MySaveFileAsTemplateAction"/>
+            <separator/>
+            <action id="MyPsiViewer" class="scala.edu.jetbrains.plugin.lt.MyPsiViewerAction"/>
+            <action id="MyPsiViewerForContext"
+                    class="scala.edu.jetbrains.plugin.lt.MyPsiViewerAction$ForContext"/>
+            <separator/>
 
-      <add-to-group group-id="ToolsMenu" anchor="first"/>
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
 
-    </group>
-  </actions>
+        </group>
+    </actions>
 
 </idea-plugin>
