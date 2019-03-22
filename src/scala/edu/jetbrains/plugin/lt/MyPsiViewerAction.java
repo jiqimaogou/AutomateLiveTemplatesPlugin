@@ -33,6 +33,7 @@ import com.intellij.openapi.actionSystem.ShortcutSet;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ex.ApplicationManagerEx;
 import com.intellij.openapi.command.CommandProcessor;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.keymap.KeymapUtil;
@@ -41,6 +42,7 @@ import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.ui.PopupHandler;
 import com.intellij.ui.treeStructure.Tree;
@@ -89,6 +91,10 @@ public class MyPsiViewerAction extends DumbAwareAction {
             final ViewerTreeStructure treeStructure = getTreeStructure();
             PsiElement rootPsiElement = treeStructure.getRootPsiElement();
             if (rootPsiElement != null) {
+                Document document = PsiDocumentManager.getInstance(
+                        rootPsiElement.getProject()).getDocument(
+                        rootPsiElement.getContainingFile());
+                assert document != null : rootPsiElement.getContainingFile();
             }
 
             myPsiTreeValue.addMouseListener(new PopupHandler() {
