@@ -58,7 +58,7 @@
                                implementationClass="scala.edu.jetbrains.plugin.lt.MyJavaUnwrapDescriptor"
                                order="first"/>
         <applicationConfigurable groupId="editor" groupWeight="130"
-                                 instance="com.intellij.codeInsight.template.impl.MyLiveTemplatesConfigurable"
+                                 instance="scala.edu.jetbrains.plugin.lt.MyLiveTemplatesConfigurable"
                                  id="editing.templates"
                                  key="templates.settings.page.title"
                                  bundle="messages.CodeInsightBundle"/>
