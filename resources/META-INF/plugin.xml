@@ -59,7 +59,7 @@
                                order="first"/>
         <applicationConfigurable groupId="editor" groupWeight="130"
                                  instance="scala.edu.jetbrains.plugin.lt.MyLiveTemplatesConfigurable"
-                                 id="editing.templates"
+                                 id="editing.my.templates"
                                  key="templates.settings.page.title"
                                  bundle="messages.CodeInsightBundle"/>
     </extensions>
