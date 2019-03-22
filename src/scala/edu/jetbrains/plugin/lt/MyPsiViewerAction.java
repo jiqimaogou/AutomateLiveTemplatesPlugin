@@ -20,6 +20,7 @@ import com.intellij.ide.IdeBundle;
 import com.intellij.internal.psiView.PsiViewerDialog;
 import com.intellij.internal.psiView.ViewerNodeDescriptor;
 import com.intellij.internal.psiView.ViewerTreeBuilder;
+import com.intellij.internal.psiView.ViewerTreeStructure;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionPlaces;
@@ -43,6 +44,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.ui.PopupHandler;
 import com.intellij.ui.treeStructure.Tree;
+import com.intellij.util.ObjectUtils;
 import com.intellij.util.ui.tree.TreeUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -98,6 +100,13 @@ public class MyPsiViewerAction extends DumbAwareAction {
         }
         psiViewerDialog.show();
     }
+
+
+    @NotNull
+    private ViewerTreeStructure getTreeStructure() {
+        return ObjectUtils.notNull((ViewerTreeStructure) myPsiTreeBuilderValue.getTreeStructure());
+    }
+
 
     private void popupInvoked(Component component, int x, int y) {
         DefaultActionGroup group = new DefaultActionGroup(new RemoveAction());
