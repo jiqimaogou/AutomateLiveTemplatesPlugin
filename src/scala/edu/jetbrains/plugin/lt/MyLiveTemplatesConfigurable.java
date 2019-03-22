@@ -1,5 +1,6 @@
 package scala.edu.jetbrains.plugin.lt;
 
+import com.intellij.codeInsight.template.impl.LiveTemplateSettingsEditor;
 import com.intellij.codeInsight.template.impl.LiveTemplatesConfigurable;
 import com.intellij.codeInsight.template.impl.TemplateListPanel;
 import com.intellij.ui.CheckboxTree;
@@ -25,6 +26,18 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
             myTreeValue.getModel().addTreeModelListener(new TreeModelAdapter() {
                 @Override
                 protected void process(@NotNull TreeModelEvent event, @NotNull EventType type) {
+                    try {
+                        Field myCurrentTemplateEditorField =
+                                TemplateListPanel.class.getDeclaredField(
+                                        "myCurrentTemplateEditor");
+                        myCurrentTemplateEditorField.setAccessible(true);
+                        LiveTemplateSettingsEditor myCurrentTemplateEditorValue =
+                                (LiveTemplateSettingsEditor) myCurrentTemplateEditorField.get(
+                                        myPanel);
+                    } catch (Exception exc) {
+                        exc.printStackTrace();
+                        throw new IllegalStateException(exc.getMessage());
+                    }
                 }
             });
 
