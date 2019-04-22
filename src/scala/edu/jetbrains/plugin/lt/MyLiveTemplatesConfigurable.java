@@ -67,6 +67,8 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                                     "(?<!\\$)(" + variable.getName()
                                                                             + "|"
                                                                             + variable.getName()
+                                                                            + "|"
+                                                                            + variable.getName()
                                                                             + ")(?!\\$)",
                                                                     "\\$" + "$1" + "\\$"));
                                                 }
