@@ -4,6 +4,8 @@ import com.intellij.codeInsight.template.impl.LiveTemplateSettingsEditor;
 import com.intellij.codeInsight.template.impl.LiveTemplatesConfigurable;
 import com.intellij.codeInsight.template.impl.TemplateListPanel;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.event.DocumentEvent;
+import com.intellij.openapi.editor.event.DocumentListener;
 import com.intellij.ui.CheckboxTree;
 import com.intellij.util.ui.tree.TreeModelAdapter;
 
@@ -42,6 +44,13 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                             myTemplateEditorField.setAccessible(true);
                             Editor myTemplateEditorValue = (Editor) myTemplateEditorField.get(
                                     myCurrentTemplateEditorValue);
+
+                            myTemplateEditorValue.getDocument().addDocumentListener(
+                                    new DocumentListener() {
+                                        @Override
+                                        public void documentChanged(@NotNull DocumentEvent e) {
+                                        }
+                                    });
                         } catch (Exception exc) {
                             exc.printStackTrace();
                             throw new IllegalStateException(exc.getMessage());
