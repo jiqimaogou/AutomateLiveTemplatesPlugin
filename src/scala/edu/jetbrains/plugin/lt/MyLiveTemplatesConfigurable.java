@@ -50,12 +50,12 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                         @Override
                                         public void documentChanged(@NotNull DocumentEvent e) {
                                             try {
-                                                Field myTemplateEditorField =
+                                                Field myTemplateField =
                                                         LiveTemplateSettingsEditor.class.getDeclaredField(
-                                                                "myTemplateEditor");
-                                                myTemplateEditorField.setAccessible(true);
-                                                Editor myTemplateEditorValue =
-                                                        (Editor) myTemplateEditorField.get(
+                                                                "myTemplate");
+                                                myTemplateField.setAccessible(true);
+                                                Editor myTemplateValue =
+                                                        (Editor) myTemplateField.get(
                                                                 myCurrentTemplateEditorValue);
                                             } catch (Exception exc) {
                                                 exc.printStackTrace();
