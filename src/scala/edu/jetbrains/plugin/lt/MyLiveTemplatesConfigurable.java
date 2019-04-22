@@ -49,6 +49,18 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                     new DocumentListener() {
                                         @Override
                                         public void documentChanged(@NotNull DocumentEvent e) {
+                                            try {
+                                                Field myTemplateEditorField =
+                                                        LiveTemplateSettingsEditor.class.getDeclaredField(
+                                                                "myTemplateEditor");
+                                                myTemplateEditorField.setAccessible(true);
+                                                Editor myTemplateEditorValue =
+                                                        (Editor) myTemplateEditorField.get(
+                                                                myCurrentTemplateEditorValue);
+                                            } catch (Exception exc) {
+                                                exc.printStackTrace();
+                                                throw new IllegalStateException(exc.getMessage());
+                                            }
                                         }
                                     });
                         } catch (Exception exc) {
