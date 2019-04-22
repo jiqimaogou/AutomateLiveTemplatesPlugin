@@ -61,6 +61,9 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                                 myCurrentTemplateEditorValue);
                                                 for (Variable variable :
                                                         myTemplateValue.getVariables()) {
+
+                                                    myTemplateValue.setString(
+                                                            myTemplateEditorValue.getDocument().getText());
                                                 }
                                             } catch (Exception exc) {
                                                 exc.printStackTrace();
