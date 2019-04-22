@@ -65,7 +65,8 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                     myTemplateValue.setString(
                                                             myTemplateEditorValue.getDocument().getText().replaceAll(
                                                                     "(?<!\\$)(" + variable.getName()
-                                                                            + ")(?!\\$)", "$1"));
+                                                                            + ")(?!\\$)",
+                                                                    "$" + "$1" + "$"));
                                                 }
                                             } catch (Exception exc) {
                                                 exc.printStackTrace();
