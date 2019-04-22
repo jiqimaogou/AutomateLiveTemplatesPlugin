@@ -8,6 +8,7 @@ import com.intellij.codeInsight.template.impl.Variable;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.CheckboxTree;
 import com.intellij.util.ui.tree.TreeModelAdapter;
 
@@ -66,9 +67,11 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                             myTemplateEditorValue.getDocument().getText().replaceAll(
                                                                     "(?<!\\$)(" + variable.getName()
                                                                             + "|"
-                                                                            + variable.getName()
+                                                                            + StringUtil.capitalize(
+                                                                            variable.getName())
                                                                             + "|"
-                                                                            + variable.getName()
+                                                                            + StringUtil.decapitalize(
+                                                                            variable.getName())
                                                                             + ")(?!\\$)",
                                                                     "\\$" + "$1" + "\\$"));
                                                 }
