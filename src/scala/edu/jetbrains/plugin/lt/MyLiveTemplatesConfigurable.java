@@ -4,6 +4,7 @@ import com.intellij.codeInsight.template.impl.LiveTemplateSettingsEditor;
 import com.intellij.codeInsight.template.impl.LiveTemplatesConfigurable;
 import com.intellij.codeInsight.template.impl.TemplateImpl;
 import com.intellij.codeInsight.template.impl.TemplateListPanel;
+import com.intellij.codeInsight.template.impl.Variable;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
@@ -58,6 +59,9 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                 TemplateImpl myTemplateValue =
                                                         (TemplateImpl) myTemplateField.get(
                                                                 myCurrentTemplateEditorValue);
+                                                for (Variable variable :
+                                                        myTemplateValue.getVariables()) {
+                                                }
                                             } catch (Exception exc) {
                                                 exc.printStackTrace();
                                                 throw new IllegalStateException(exc.getMessage());
