@@ -2,6 +2,7 @@ package scala.edu.jetbrains.plugin.lt;
 
 import com.intellij.codeInsight.template.impl.LiveTemplateSettingsEditor;
 import com.intellij.codeInsight.template.impl.LiveTemplatesConfigurable;
+import com.intellij.codeInsight.template.impl.TemplateImpl;
 import com.intellij.codeInsight.template.impl.TemplateListPanel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.event.DocumentEvent;
@@ -54,8 +55,8 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                         LiveTemplateSettingsEditor.class.getDeclaredField(
                                                                 "myTemplate");
                                                 myTemplateField.setAccessible(true);
-                                                Editor myTemplateValue =
-                                                        (Editor) myTemplateField.get(
+                                                TemplateImpl myTemplateValue =
+                                                        (TemplateImpl) myTemplateField.get(
                                                                 myCurrentTemplateEditorValue);
                                             } catch (Exception exc) {
                                                 exc.printStackTrace();
