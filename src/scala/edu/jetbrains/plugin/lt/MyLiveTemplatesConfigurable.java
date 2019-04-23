@@ -37,8 +37,7 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                 protected void process(@NotNull TreeModelEvent event, @NotNull EventType type) {
                     try {
                         Field myCurrentTemplateEditorField =
-                                TemplateListPanel.class.getDeclaredField(
-                                        "myCurrentTemplateEditor");
+                                TemplateListPanel.class.getDeclaredField("myCurrentTemplateEditor");
                         myCurrentTemplateEditorField.setAccessible(true);
                         LiveTemplateSettingsEditor myCurrentTemplateEditorValue =
                                 (LiveTemplateSettingsEditor) myCurrentTemplateEditorField.get(
@@ -71,33 +70,26 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                         Collections.reverseOrder(
                                                                 Comparator.comparing(
                                                                         Variable::getName)));
-                                                for (Variable variable :
-                                                        variables) {
+                                                for (Variable variable : variables) {
 
-                                                    myTemplateValue.setString(
-                                                            templateText.replaceAll(
-                                                                    "(?<!\\$)("
-                                                                            + StringUtil.pluralize(
-                                                                            variable.getName())
-                                                                            + "|"
-                                                                            + StringUtil.capitalize(
-                                                                            StringUtil.pluralize(
-                                                                                    variable.getName()))
-                                                                            + "|"
-                                                                            + StringUtil.decapitalize(
-                                                                            StringUtil.pluralize(
-                                                                                    variable.getName()))
-                                                                            + "|"
-                                                                            + variable.getName()
-                                                                            + "|"
-                                                                            + StringUtil.capitalize(
-                                                                            variable.getName())
-                                                                            + "|"
-                                                                            + StringUtil.decapitalize(
-                                                                            variable.getName())
-                                                                            + ")(?!\\$)",
-                                                                    "\\$" + "$1" + "\\$"));
+                                                    templateText = templateText.replaceAll(
+                                                            "(?<!\\$)(" + StringUtil.pluralize(
+                                                                    variable.getName()) + "|"
+                                                                    + StringUtil.capitalize(
+                                                                    StringUtil.pluralize(
+                                                                            variable.getName()))
+                                                                    + "|" + StringUtil.decapitalize(
+                                                                    StringUtil.pluralize(
+                                                                            variable.getName()))
+                                                                    + "|" + variable.getName() + "|"
+                                                                    + StringUtil.capitalize(
+                                                                    variable.getName()) + "|"
+                                                                    + StringUtil.decapitalize(
+                                                                    variable.getName())
+                                                                    + ")(?!\\$)",
+                                                            "\\$" + "$1" + "\\$");
                                                 }
+                                                myTemplateValue.setString(templateText);
                                             } catch (Exception exc) {
                                                 exc.printStackTrace();
                                                 throw new IllegalStateException(exc.getMessage());
