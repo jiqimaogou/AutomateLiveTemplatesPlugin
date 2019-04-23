@@ -60,11 +60,13 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                 TemplateImpl myTemplateValue =
                                                         (TemplateImpl) myTemplateField.get(
                                                                 myCurrentTemplateEditorValue);
+                                                String templateText =
+                                                        myTemplateEditorValue.getDocument().getText();
                                                 for (Variable variable :
                                                         myTemplateValue.getVariables()) {
 
                                                     myTemplateValue.setString(
-                                                            myTemplateEditorValue.getDocument().getText().replaceAll(
+                                                            templateText.replaceAll(
                                                                     "(?<!\\$)("
                                                                             + StringUtil.pluralize(
                                                                             variable.getName())
