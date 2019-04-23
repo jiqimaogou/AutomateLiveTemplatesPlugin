@@ -68,7 +68,9 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                 ArrayList<Variable> variables =
                                                         myTemplateValue.getVariables();
                                                 Collections.sort(variables,
-                                                        Comparator.comparing(Variable::getName));
+                                                        Collections.reverseOrder(
+                                                                Comparator.comparing(
+                                                                        Variable::getName)));
                                                 for (Variable variable :
                                                         variables) {
 
