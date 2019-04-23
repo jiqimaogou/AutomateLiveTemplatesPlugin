@@ -72,6 +72,14 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                                             + "|"
                                                                             + StringUtil.decapitalize(
                                                                             variable.getName())
+                                                                            + "|"
+                                                                            + variable.getName()
+                                                                            + "|"
+                                                                            + StringUtil.capitalize(
+                                                                            variable.getName())
+                                                                            + "|"
+                                                                            + StringUtil.decapitalize(
+                                                                            variable.getName())
                                                                             + ")(?!\\$)",
                                                                     "\\$" + "$1" + "\\$"));
                                                 }
