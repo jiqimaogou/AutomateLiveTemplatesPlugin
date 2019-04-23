@@ -65,13 +65,17 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
 
                                                     myTemplateValue.setString(
                                                             myTemplateEditorValue.getDocument().getText().replaceAll(
-                                                                    "(?<!\\$)(" + variable.getName()
+                                                                    "(?<!\\$)("
+                                                                            + StringUtil.pluralize(
+                                                                            variable.getName())
                                                                             + "|"
                                                                             + StringUtil.capitalize(
-                                                                            variable.getName())
+                                                                            StringUtil.pluralize(
+                                                                                    variable.getName()))
                                                                             + "|"
                                                                             + StringUtil.decapitalize(
-                                                                            variable.getName())
+                                                                            StringUtil.pluralize(
+                                                                                    variable.getName()))
                                                                             + "|"
                                                                             + variable.getName()
                                                                             + "|"
