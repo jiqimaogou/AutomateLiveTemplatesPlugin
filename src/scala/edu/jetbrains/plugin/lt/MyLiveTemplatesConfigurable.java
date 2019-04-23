@@ -15,6 +15,9 @@ import com.intellij.util.ui.tree.TreeModelAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JComponent;
 import javax.swing.event.TreeModelEvent;
@@ -62,8 +65,12 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                                 myCurrentTemplateEditorValue);
                                                 String templateText =
                                                         myTemplateEditorValue.getDocument().getText();
+                                                ArrayList<Variable> variables =
+                                                        myTemplateValue.getVariables();
+                                                Collections.sort(variables,
+                                                        Comparator.comparing(Variable::getName));
                                                 for (Variable variable :
-                                                        myTemplateValue.getVariables()) {
+                                                        variables) {
 
                                                     myTemplateValue.setString(
                                                             templateText.replaceAll(
