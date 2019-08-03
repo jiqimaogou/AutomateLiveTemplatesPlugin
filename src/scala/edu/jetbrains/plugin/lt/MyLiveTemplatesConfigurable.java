@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 
 public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
@@ -71,6 +71,8 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                                 Comparator.comparing(
                                                                         Variable::getName)));
                                                 for (Variable variable : variables) {
+
+                                                    variable.setExpressionString("complete()");
 
                                                     templateText = templateText.replaceAll(
                                                             "(?<!\\$)(" + StringUtil.pluralize(
