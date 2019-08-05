@@ -72,6 +72,7 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                                         Variable::getName)));
                                                 for (Variable variable : variables) {
 
+                                                    variable.setExpressionString();
                                                     variable.setExpressionString("complete()");
 
                                                     templateText = templateText.replaceAll(
