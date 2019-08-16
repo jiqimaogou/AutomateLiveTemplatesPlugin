@@ -29,8 +29,9 @@
     <idea-version since-build="171.4694.23"/>
 
 
-    <depends>org.intellij.scala</depends>
-    <depends>org.jetbrains.kotlin</depends>
+    <depends optional="true">org.intellij.scala</depends>
+    <depends optional="true">org.jetbrains.kotlin</depends>
+    <depends optional="true">com.intellij.modules.pycharm</depends>
 
     <extensionPoints>
         <extensionPoint name="fileTypeNodeFilter"
