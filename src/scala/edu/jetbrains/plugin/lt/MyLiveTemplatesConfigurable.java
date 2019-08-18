@@ -70,6 +70,8 @@ public class MyLiveTemplatesConfigurable extends LiveTemplatesConfigurable {
                                                         Collections.reverseOrder(
                                                                 Comparator.comparing(
                                                                         Variable::getName)));
+                                                variables.sort(Comparator.comparingInt(
+                                                        variable -> variable.getName().length()));
                                                 for (Variable variable : variables) {
 
                                                     variable.setExpressionString("completeSmart()");
